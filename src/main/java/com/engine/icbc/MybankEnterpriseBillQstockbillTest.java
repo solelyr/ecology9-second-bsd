@@ -18,6 +18,9 @@ public class MybankEnterpriseBillQstockbillTest {
     protected static String APIGW_PUBLIC_KEY = "[需替换]工行API网关公钥，请向工行联系获取";
     protected static String PRI_KEY = "[需替换]应用方私钥，由应用方生成公私钥对，并将公钥上传至工行API开放平台";
     protected static String BASE_URL = "[需替换]工行API地址"; // api地址
+    protected static String CA_PRIVATE_STR = "";
+    protected static String CA_PUBLIC_STR = "";
+    protected static String CA_PASSWORD = "";
 
     public static void main(String[] args) throws Exception {
         String URI = "mybank/enterprise/bill/qstockbill/V1";
