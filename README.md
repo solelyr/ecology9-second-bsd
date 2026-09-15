@@ -10,7 +10,7 @@ _**两大需求场景:**_
 **异构系统调用EC9接口** 直达[https://e-cloudstore.com/ec/api/applist/index.html](https://e-cloudstore.com/ec/api/applist/index.html)
 
 _**其他参考资料**_
-EC9.0支持的可配置化的短信接口[查看](https://l1utaihong.gitee.io/custom/doc/SMS_INTERFACE.html)   
+EC9.0支持的可配置化的短信接口[查看](https://l1utaihong.gitee.io/solelyrSecond/doc/SMS_INTERFACE.html)   
 泛微OA产品部署HTTPS[查看](http://note.youdao.com/s/L8Qg8BFk)  
 OA服务器运维脚本[查看](http://note.youdao.com/s/JhfblPlf)  
 页面跳转支持传递登录人相关信息[查看](http://note.youdao.com/s/QYzRL8aK)
@@ -57,17 +57,17 @@ OA服务器运维脚本[查看](http://note.youdao.com/s/JhfblPlf)
   - 如有问题请检查BaseTest输出的`sysPath`是否正确
 
 6. OA 自定义日志输出路径
-  - 修改配置文件路径：`/weaver/ecology/WEB-INF/log4jinit.properties`，在最后面增加以下内容，请自行修改custom为自定义的日志名称，建议使用ctrl+f替换操作
+  - 修改配置文件路径：`/weaver/ecology/WEB-INF/log4jinit.properties`，在最后面增加以下内容，请自行修改solelyrSecond为自定义的日志名称，建议使用ctrl+f替换操作
     ```
     #自定义开发日志文件
-    log4j.logger.custom=INFO,ERROR,custom
-    log4j.appender.custom=org.apache.log4j.DailyRollingFileAppender
-    log4j.appender.custom.DatePattern='_'yyyyMMdd'.log'
-    #@custom为日志目录名称，custom.log为日志名称
-    log4j.appender.custom.File=@custom/custom.log
-    log4j.appender.custom.layout=org.apache.log4j.PatternLayout
-    log4j.appender.custom.layout.ConversionPattern=%d{yyyy-MM-dd HH\:mm\:ss,SSS} %-5p [Thread\:%t] %m%n
-    log4j.additivity.custom=false
+    log4j.logger.solelyrSecond=INFO,ERROR,solelyrSecond
+    log4j.appender.solelyrSecond=org.apache.log4j.DailyRollingFileAppender
+    log4j.appender.solelyrSecond.DatePattern='_'yyyyMMdd'.log'
+    #@solelyrSecond为日志目录名称，solelyrSecond.log为日志名称
+    log4j.appender.solelyrSecond.File=@solelyrSecond/solelyrSecond.log
+    log4j.appender.solelyrSecond.layout=org.apache.log4j.PatternLayout
+    log4j.appender.solelyrSecond.layout.ConversionPattern=%d{yyyy-MM-dd HH\:mm\:ss,SSS} %-5p [Thread\:%t] %m%n
+    log4j.additivity.solelyrSecond=false
     ```
 7. 部署至客户环境
   - 运行maven package 命令，生成对应jar包，将jar包放入客户环境WEB-INF/lib目录下
