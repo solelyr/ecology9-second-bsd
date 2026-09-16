@@ -16,6 +16,10 @@ public class ErpResponse {
     public void setStd_data(StdData std_data) {
         this.std_data = std_data;
     }
+    public Boolean isSuccess(){
+        return "0".equals(std_data.getExecution().getCode());
+    }
+
 
     public static class StdData {
         private Execution execution;
@@ -65,20 +69,42 @@ public class ErpResponse {
     }
 
     public static class Result {
-        private List<String> success;
-        private List<String> error;
+        private List<SuccessItem> success;
+        private List<ErrorItem> error;
 
-        public List<String> getSuccess() {
+        public List<SuccessItem> getSuccess() {
             return success;
         }
-        public void setSuccess(List<String> success) {
+        public void setSuccess(List<SuccessItem> success) {
             this.success = success;
         }
-        public List<String> getError() {
+        public List<ErrorItem> getError() {
             return error;
         }
-        public void setError(List<String> error) {
+        public void setError(List<ErrorItem> error) {
             this.error = error;
+        }
+    }
+
+    public static class SuccessItem {
+        private String doc_no;
+
+        public String getDoc_no() {
+            return doc_no;
+        }
+        public void setDoc_no(String doc_no) {
+            this.doc_no = doc_no;
+        }
+    }
+
+    public static class ErrorItem {
+        private String message;
+
+        public String getMessage() {
+            return message;
+        }
+        public void setMessage(String message) {
+            this.message = message;
         }
     }
 }

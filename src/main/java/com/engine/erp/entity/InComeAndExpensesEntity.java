@@ -1,6 +1,5 @@
 package com.engine.erp.entity;
 
-import com.weaverboot.frame.dao.anno.Association;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -58,7 +57,7 @@ public class InComeAndExpensesEntity {
     private String bank_account_no;
 
     /** 汇率 */
-    private BigDecimal exchange_rate;
+    private String exchange_rate;
 
     /** 原币金额 */
     private BigDecimal trans_curr_amount;
@@ -91,7 +90,7 @@ public class InComeAndExpensesEntity {
     private String oa_source;
 
     /** 需往来系统核销 */
-    private String require_system_verify_flags;
+    private Boolean require_system_verify_flag;
 
     /** ERP收支单实体对象明细数据 */
     private List<InComeAndExpensesDetailEntity> cp_doc_verified;

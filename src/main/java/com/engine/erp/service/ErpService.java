@@ -14,10 +14,10 @@ public interface ErpService {
     /**
      * 费用报销推送收支单接口
      */
-    EcologyRestUtil ExpenseToIncome(RequestInfo requestInfo);
+    Boolean ExpenseToIncome(RequestInfo requestInfo);
 
     /**
      * 差旅报销推送收支单接口
      */
-    EcologyRestUtil TravelToExpense(RequestInfo requestInfo);
+    Boolean TravelToExpense(RequestInfo requestInfo);
 }

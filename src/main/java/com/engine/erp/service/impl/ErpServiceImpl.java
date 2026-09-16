@@ -16,12 +16,12 @@ import weaver.soa.workflow.request.RequestInfo;
 public class ErpServiceImpl extends Service implements ErpService {
 
     @Override
-    public EcologyRestUtil ExpenseToIncome(RequestInfo requestInfo) {
+    public Boolean ExpenseToIncome(RequestInfo requestInfo) {
         return commandExecutor.execute(new ExpenseToIncomeCmd(user,requestInfo));
     }
 
     @Override
-    public EcologyRestUtil TravelToExpense(RequestInfo requestInfo) {
+    public Boolean TravelToExpense(RequestInfo requestInfo) {
         return commandExecutor.execute(new TravelToExpenseCmd(user,requestInfo));
     }
 }
