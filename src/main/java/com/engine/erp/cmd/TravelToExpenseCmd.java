@@ -7,9 +7,7 @@ import com.engine.erp.enums.ErpConfig;
 import com.engine.erp.util.ErpHttpHelp;
 import com.engine.erp.vo.ErpResponse;
 import com.icbc.api.internal.util.internal.util.fastjson.JSON;
-import com.solelyr.common.entity.EcologyRestEntity;
 import com.solelyr.common.service.WorkflowCommand;
-import com.solelyr.common.utils.EcologyRestUtil;
 import com.solelyr.common.utils.WorkflowUtil;
 import weaver.conn.RecordSet;
 import weaver.general.Util;
@@ -63,7 +61,7 @@ public class TravelToExpenseCmd extends WorkflowCommand<Boolean> {
         List<HrmResource> hrmList = new HrmResourceDao().find(userParams);
         HrmResource applyUser = !hrmList.isEmpty() ? hrmList.get(0) : null;
         InComeAndExpensesEntity inCome = InComeAndExpensesEntity.builder()
-                .om_company_id(Util.null2String(mainData.get("gserp")))
+                .om_company_id(Util.null2String(mainData.get("gs")))
                 .doc_type_no("K307")
                 .doc_date(date)
                 .bookkeeping_date(date)
@@ -71,6 +69,7 @@ public class TravelToExpenseCmd extends WorkflowCommand<Boolean> {
                 .settlement_object_type("3")
                 .settlement_object_no(applyUser != null ? Util.null2String(applyUser.getWorkcode()) : "")
                 .payment_property("3")
+                .settlement_method_no(Util.null2String(mainData.get("jsfs")))
                 .bank_account_no(Util.null2String(mainData.get("fkzh")))
                 .exchange_rate("1")
                 .trans_curr_amount(new BigDecimal(Util.null2String(mainData.get("sjbxje"))))

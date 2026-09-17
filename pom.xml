@@ -50,6 +50,26 @@
             <artifactId>icbc-api-sdk-cop-io</artifactId>
             <version>26.09.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>icbc-api-sdk</groupId>
+            <artifactId>commons-logging-1.2</artifactId>
+            <version>26.09.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>icbc-api-sdk</groupId>
+            <artifactId>hsm-software-share-1.0.5</artifactId>
+            <version>26.09.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>icbc-api-sdk</groupId>
+            <artifactId>icbc-ca</artifactId>
+            <version>26.09.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>icbc-api-sdk</groupId>
+            <artifactId>InfosecCrypto_Java1_02_JDK14</artifactId>
+            <version>26.09.0.1</version>
+        </dependency>
     </dependencies>
 
     <build>
