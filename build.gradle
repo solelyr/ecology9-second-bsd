@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+}
+
+group = 'ecology9.second'
+version = '26.09.01'
+
+def weaverVersion = '9.00.2601.01'
+def lombokVersion = '1.18.30'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://nexus.solelyz.cn/repository/maven-public/')
+    }
+    mavenCentral()
+}
+
+// Ecology 的运行库由本地 WEB-INF/lib 提供。排序后构造固定的 classpath，
+// 避免 Gradle FileTree 的未定义顺序导致不同机器上的依赖加载顺序不一致。
+def ecologyLibs = files(fileTree('ecology/WEB-INF/lib') {
+    include '*.jar'
+}.files.sort { left, right -> left.name <=> right.name })
+
+dependencies {
+    // 完整的 Weaver 核心包不在 WEB-INF/lib 中，优先从 Maven 本地库/Nexus 获取。
+    implementation "ecology9.second:weaver:${weaverVersion}"
+
+    // 普通 jar 任务不会把这些依赖打进项目产物；它们仅组成编译、运行和测试 classpath。
+    implementation ecologyLibs
+
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation 'junit:junit:4.13.1'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+tasks.register('verifyEcologyLibs') {
+    group = 'verification'
+    description = 'Checks that the local Ecology WEB-INF/lib directory is available.'
+    doLast {
+        File libDirectory = file('ecology/WEB-INF/lib')
+        if (!libDirectory.isDirectory()) {
+            throw new GradleException("Ecology依赖目录不存在：${libDirectory.absolutePath}")
+        }
+        if (ecologyLibs.files.isEmpty()) {
+            throw new GradleException("Ecology依赖目录中没有JAR文件：${libDirectory.absolutePath}")
+        }
+        logger.lifecycle("Ecology本地依赖检查通过，共{}个JAR。", ecologyLibs.files.size())
+    }
+}
+
+tasks.named('compileJava') {
+    dependsOn tasks.named('verifyEcologyLibs')
+}
+
+tasks.withType(Test).configureEach {
+    useJUnit()
+    workingDir = projectDir
+    systemProperty 'file.encoding', 'UTF-8'
+}
+
+tasks.named('jar') {
+    archiveBaseName = rootProject.name
+}
