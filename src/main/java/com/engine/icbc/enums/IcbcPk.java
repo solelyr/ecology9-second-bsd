@@ -1,4 +1,4 @@
-package com.engine.erp.enums;
+package com.engine.icbc.enums;
 
 
 import com.solelyr.common.service.EcologyRestPk;
@@ -8,13 +8,11 @@ import com.solelyr.common.service.EcologyRestPk;
  * @USER: solelyr
  * @DATE: 2025/12/16 09:32:01
  */
-public enum CommonPk implements EcologyRestPk {
-    HTTPLOG("JM_QQRZ","http请求日志"),
-    ACTION( "JM_SDYX","RZW_流程自定义接口手动执行"),
-    SAPSUCCECCLOG("JM_CGRZ","SAP_接口成功的记录"),
+public enum IcbcPk implements EcologyRestPk {
+    QSTACKBILL("JM_CYPJ","持有票据"),
     ;
 
-    CommonPk(String pk, String name){
+    IcbcPk(String pk, String name){
         this.pk = pk;
         this.name = name;
     }

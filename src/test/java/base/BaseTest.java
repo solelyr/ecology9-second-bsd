@@ -3,7 +3,6 @@ package base;
 
 import org.junit.Before;
 import weaver.general.GCONST;
-
 import java.io.File;
 
 public class BaseTest {

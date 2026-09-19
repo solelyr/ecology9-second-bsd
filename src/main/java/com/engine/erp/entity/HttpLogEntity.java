@@ -1,6 +1,7 @@
 package com.engine.erp.entity;
 
-import com.engine.erp.enums.CommonPk;
+import com.engine.erp.enums.ErpPk;
+import com.engine.util.EcologyRestUtilImpl;
 import com.solelyr.common.entity.EcologyRestEntity;
 import com.solelyr.common.utils.EcologyRestUtil;
 import lombok.*;
@@ -59,7 +60,7 @@ public class HttpLogEntity {
     private Integer sfbdqq;
 
     public static Map<String,Object> saveLog(HttpLogEntity entity){
-        EcologyRestUtil restUtil = new EcologyRestUtil();
-       return restUtil.saveOrUpdate(CommonPk.HTTPLOG,new EcologyRestEntity().setMainTable(entity));
+        EcologyRestUtil restUtil = new EcologyRestUtilImpl();
+       return restUtil.saveOrUpdate(ErpPk.HTTPLOG,new EcologyRestEntity().setMainTable(entity));
     }
 }
