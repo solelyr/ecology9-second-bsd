@@ -26,7 +26,6 @@ OA服务器运维脚本[查看](http://note.youdao.com/s/JhfblPlf)
 3. 使用 Gradle 导入项目
   - IDEA 中通过根目录的 `build.gradle` 关联 Gradle 项目，不要在 `Modules → Dependencies` 中手工添加本地 Library
   - `ecology/WEB-INF/lib` 下的 JAR 会由 Gradle 自动加入项目 classpath
-  - 迁移验证期间保留 `pom.xml` 作为回退，但 IDEA 中不要同时关联 Maven 和 Gradle 两套构建模型
   - 项目使用 Gradle Wrapper 8.14.4，运行 `gradlew.bat tasks` 可验证环境
 4. 拷贝必要的 JAR 包依赖
    这个很重要，需要与客户环境的KB补丁包保持一致
@@ -55,4 +54,3 @@ OA服务器运维脚本[查看](http://note.youdao.com/s/JhfblPlf)
 7. 部署至客户环境
   - 推荐运行 `gradlew clean build -x test`，生成的 JAR 位于 `build/libs`，将其放入客户环境 `WEB-INF/lib` 目录下
   - 需要执行本地集成测试时运行 `gradlew test`；这些测试可能访问数据库和外部接口
-  - Gradle 迁移验证期间暂时保留 `pom.xml` 作为 Maven 回退方案，IDEA 中只关联一种构建模型

@@ -49,7 +49,7 @@ public class MybankEnterpriseBillQstockbillTest extends BaseTest {
 
     @Test
     public void test() {
-        final String CONFIG_RESOURCE = "SOLELYR_QSTOCK_BILL";
+        final String CONFIG_RESOURCE = "solelyr_bsd_icbc_bill";
         final Properties CONFIG = Prop.loadTemplateProp(CONFIG_RESOURCE);
 
         final String APP_ID = Util.null2String(CONFIG.getProperty(("icbc.app-id")));
