@@ -54,6 +54,14 @@ public class QstockbillResponseRdV1sup
                 : BigDecimal.valueOf(amount, 2);
     }
 
+    /**
+     * 票据到期日
+     * @return
+     */
+    public String getPjdqr(){
+        return formatDate(getDueDate());
+    }
+
     private static String formatDate(String date) {
         if (date == null || date.isEmpty()) {
             return date;

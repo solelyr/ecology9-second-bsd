@@ -2,6 +2,7 @@ package com.engine.module.erp.service.impl;
 
 import com.engine.core.impl.Service;
 import com.engine.module.erp.cmd.ExpenseToIncomeCmd;
+import com.engine.module.erp.cmd.ReceivableNoteCreateCmd;
 import com.engine.module.erp.cmd.TravelToExpenseCmd;
 import com.engine.module.erp.service.ErpService;
 import weaver.soa.workflow.request.RequestInfo;
@@ -21,5 +22,10 @@ public class ErpServiceImpl extends Service implements ErpService {
     @Override
     public Boolean TravelToExpense(RequestInfo requestInfo) {
         return commandExecutor.execute(new TravelToExpenseCmd(user,requestInfo));
+    }
+
+    @Override
+    public Boolean ReceivableNoteCreate(RequestInfo requestInfo) {
+        return commandExecutor.execute(new ReceivableNoteCreateCmd(user,requestInfo));
     }
 }

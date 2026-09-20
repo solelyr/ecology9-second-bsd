@@ -72,5 +72,5 @@ tasks.withType(Test).configureEach {
 }
 
 tasks.named('jar') {
-    archiveBaseName = rootProject.name
+    archiveBaseName = "_"+rootProject.name
 }

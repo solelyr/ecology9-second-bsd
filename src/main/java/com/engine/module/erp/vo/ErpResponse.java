@@ -7,13 +7,13 @@ import java.util.List;
  * @USER: solelyr
  * @DATE: 2026/9/15 12:20
  */
-public class ErpResponse {
-    private StdData std_data;
+public class ErpResponse<T> {
+    private StdData<T> std_data;
 
-    public StdData getStd_data() {
+    public StdData<T> getStd_data() {
         return std_data;
     }
-    public void setStd_data(StdData std_data) {
+    public void setStd_data(StdData<T> std_data) {
         this.std_data = std_data;
     }
     public Boolean isSuccess(){
@@ -21,9 +21,9 @@ public class ErpResponse {
     }
 
 
-    public static class StdData {
+    public static class StdData<T> {
         private Execution execution;
-        private Parameter parameter;
+        private Parameter<T> parameter;
 
         public Execution getExecution() {
             return execution;
@@ -31,10 +31,10 @@ public class ErpResponse {
         public void setExecution(Execution execution) {
             this.execution = execution;
         }
-        public Parameter getParameter() {
+        public Parameter<T> getParameter() {
             return parameter;
         }
-        public void setParameter(Parameter parameter) {
+        public void setParameter(Parameter<T> parameter) {
             this.parameter = parameter;
         }
     }
@@ -57,25 +57,25 @@ public class ErpResponse {
         }
     }
 
-    public static class Parameter {
-        private Result result;
+    public static class Parameter<T> {
+        private Result<T> result;
 
-        public Result getResult() {
+        public Result<T> getResult() {
             return result;
         }
-        public void setResult(Result result) {
+        public void setResult(Result<T> result) {
             this.result = result;
         }
     }
 
-    public static class Result {
-        private List<SuccessItem> success;
+    public static class Result<T> {
+        private List<T> success;
         private List<ErrorItem> error;
 
-        public List<SuccessItem> getSuccess() {
+        public List<T> getSuccess() {
             return success;
         }
-        public void setSuccess(List<SuccessItem> success) {
+        public void setSuccess(List<T> success) {
             this.success = success;
         }
         public List<ErrorItem> getError() {
@@ -83,17 +83,6 @@ public class ErpResponse {
         }
         public void setError(List<ErrorItem> error) {
             this.error = error;
-        }
-    }
-
-    public static class SuccessItem {
-        private String doc_no;
-
-        public String getDoc_no() {
-            return doc_no;
-        }
-        public void setDoc_no(String doc_no) {
-            this.doc_no = doc_no;
         }
     }
 

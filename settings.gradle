@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = '_ecology9-second-bsd'
+rootProject.name = 'ecology9-second-bsd'

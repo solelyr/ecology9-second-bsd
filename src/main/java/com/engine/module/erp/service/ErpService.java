@@ -11,11 +11,22 @@ public interface ErpService {
 
     /**
      * 费用报销推送收支单接口
+     * @param requestInfo
+     * @return
      */
     Boolean ExpenseToIncome(RequestInfo requestInfo);
 
     /**
      * 差旅报销推送收支单接口
+     * @param requestInfo
+     * @return
      */
     Boolean TravelToExpense(RequestInfo requestInfo);
+
+    /**
+     *
+     * @param requestInfo
+     * @return
+     */
+    Boolean ReceivableNoteCreate(RequestInfo requestInfo);
 }

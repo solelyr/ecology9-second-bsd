@@ -5,8 +5,9 @@ import com.engine.core.interceptor.CommandContext;
 import com.engine.module.erp.util.ErpHttpHelp;
 import com.engine.module.erp.entity.InComeAndExpensesEntity;
 import com.engine.module.erp.enums.ErpConfig;
+import com.engine.module.erp.util.ErpResponseUtil;
 import com.engine.module.erp.vo.ErpResponse;
-import com.icbc.api.internal.util.internal.util.fastjson.JSON;
+import com.engine.module.erp.vo.IncomeAndExpensesVo;
 import com.solelyr.common.service.WorkflowCommand;
 import com.solelyr.common.utils.WorkflowUtil;
 import weaver.conn.RecordSet;
@@ -43,7 +44,7 @@ public class TravelToExpenseCmd extends WorkflowCommand<Boolean> {
         com.engine.module.erp.entity.InComeAndExpensesEntity income = getInComeAndExpensesEntity(mainData);
         String result = ErpHttpHelp.post(requestInfo.getRequestid(), ErpConfig.INCOMEANDEXPENSES,income);
         log.info("#TravelToExpenseCmd 差旅报销推送ERP收支单 ====== " + requestId + " 返回结果：" + result);
-        com.engine.module.erp.vo.ErpResponse response = JSON.parseObject(result, ErpResponse.class);
+        ErpResponse<IncomeAndExpensesVo> response = ErpResponseUtil.parse(result, IncomeAndExpensesVo.class);
         if (response.isSuccess()){
             String doc_no = Util.null2String(response.getStd_data().getParameter().getResult().getSuccess().get(0).getDoc_no());
             if(!update(doc_no)) throw new ECException("差旅报销推送完成更新主表ERP收支单单号出错");

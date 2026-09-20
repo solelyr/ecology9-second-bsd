@@ -7,7 +7,7 @@ package com.engine.module.erp.enums;
  */
 public enum ErpConfig {
     INCOMEANDEXPENSES("Beisit_External","e10.oapi.expense.receipt.doc.data.create","YOPENAPI","收支单"),
-
+    RECEIVABLENOTECREATE("Beisit_External","e10.oapi.receivable.note.data.create","YOAPI","创建应收票据"),
     ;
 
     private final String id;
