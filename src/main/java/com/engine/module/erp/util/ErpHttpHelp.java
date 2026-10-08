@@ -37,13 +37,13 @@ public class ErpHttpHelp {
         String all = digi_host + digi_service;
         String digi_key = stringToMD5(all);
         Map<String, String> headersMap = new HashMap<>();
-        headersMap.put("digi_type", digi_type);
         headersMap.put("digi-type", digi_type);
-        headersMap.put("digi_protocol", digi_protocol);
-        headersMap.put("digi_host", digi_host);
-        headersMap.put("digi_service", digi_service);
-        headersMap.put("digi_key", digi_key);
-        headersMap.put("digi_data_exchange_protocol", digi_data_exchange_protocol);
+        headersMap.put("digi-protocol", digi_protocol);
+        headersMap.put("digi-host", digi_host);
+        headersMap.put("digi-service", digi_service);
+        headersMap.put("digi-key", digi_key);
+        headersMap.put("digi-data-exchange-protocol", digi_data_exchange_protocol);
+        headersMap.put("Content-Type", "application/json;charset=UTF-8");
         return post(requestId,erpConfig,headersMap,data);
     }
 
