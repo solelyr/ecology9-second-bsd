@@ -39,15 +39,17 @@ public class ExpenseToIncomeCmd extends WorkflowCommand<Boolean> {
     @Override
     public Boolean execute(CommandContext commandContext) {
         String requestId = requestInfo.getRequestid();
-        log.info("#TravelToExpenseCmd 费用报销推送ERP收支单 ====== " + requestId);
+        log.info("#ExpenseToIncomeCmd 费用报销推送ERP收支单 ====== " + requestId);
         Map<String, Object> mainData = WorkflowUtil.getMainData(requestInfo);
         com.engine.module.erp.entity.InComeAndExpensesEntity income = getInComeAndExpensesEntity(mainData);
         String result = ErpHttpHelp.post(requestInfo.getRequestid(), ErpConfig.INCOMEANDEXPENSES,income);
-        log.info("#TravelToExpenseCmd 费用报销推送ERP收支单 ====== " + requestId + " 返回结果：" + result);
+        log.info("#ExpenseToIncomeCmd 费用报销推送ERP收支单 ====== " + requestId + " 返回结果：" + result);
         ErpResponse<IncomeAndExpensesVo> response = ErpResponseUtil.parse(result, IncomeAndExpensesVo.class);
         if (response.isSuccess()){
             String doc_no = Util.null2String(response.getStd_data().getParameter().getResult().getSuccess().get(0).getDoc_no());
             if(!update(doc_no)) throw new ECException("费用报销推送完成更新主表ERP收支单单号出错");
+        }else {
+            return false;
         }
         return true;
     }

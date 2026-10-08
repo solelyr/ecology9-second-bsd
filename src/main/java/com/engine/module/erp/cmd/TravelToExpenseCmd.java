@@ -48,6 +48,8 @@ public class TravelToExpenseCmd extends WorkflowCommand<Boolean> {
         if (response.isSuccess()){
             String doc_no = Util.null2String(response.getStd_data().getParameter().getResult().getSuccess().get(0).getDoc_no());
             if(!update(doc_no)) throw new ECException("差旅报销推送完成更新主表ERP收支单单号出错");
+        }else {
+            return false;
         }
         return true;
     }

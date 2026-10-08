@@ -7,7 +7,6 @@ import com.engine.module.erp.enums.ErpConfig;
 import com.engine.module.erp.util.ErpHttpHelp;
 import com.engine.module.erp.util.ErpResponseUtil;
 import com.engine.module.erp.vo.ErpResponse;
-import com.engine.module.erp.vo.IncomeAndExpensesVo;
 import com.engine.module.erp.vo.ReceivableNoteVo;
 import com.solelyr.common.service.WorkflowCommand;
 import com.solelyr.common.utils.WorkflowUtil;
@@ -19,7 +18,7 @@ import weaver.hrm.User;
 import java.util.Map;
 
 /**
- * @DESCRIPTION:
+ * @DESCRIPTION: 票据确认流程推送ERP创建应收票据接口
  * @USER: solelyr
  * @DATE: 2026/9/20 20:13
  */
@@ -40,7 +39,9 @@ public class ReceivableNoteCreateCmd extends WorkflowCommand<Boolean> {
         ErpResponse<ReceivableNoteVo> response = ErpResponseUtil.parse(result, ReceivableNoteVo.class);
         if (response.isSuccess()){
             String note_no = Util.null2String(response.getStd_data().getParameter().getResult().getSuccess().get(0).getNote_no());
-            if(!update(note_no)) throw new ECException("差旅报销推送完成更新主表ERP收支单单号出错");
+            if(!update(note_no)) throw new ECException("#ReceivableNoteCreateCmd 票据确认流程推送ERP创建应收票据接口出错！");
+        }else {
+            return false;
         }
 
         return true;

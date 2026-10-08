@@ -42,38 +42,42 @@ public class QstackBillSyncCmd extends AbstractCommand<Boolean> {
     @Override
     public Boolean execute(CommandContext commandContext) {
         log.info("####调用工行票据查询接口开始！####"+dueDateBgn+"---"+dueDateEnd);
-        String nextTag = "-1"; // 初始页
-        while (!"".equals(nextTag)){
-            MybankEnterpriseBillQstockbillResponseV1 response = query(nextTag);
-            log.info("####调用工行票据查询接口查询结果！####输入nextTag："+nextTag+"，接口返回结果："+response.isSuccess()+"，接口返回行数："+response.getTotalNum()+"，接口返回nextTag："+response.getNextTag());
-            if (response.isSuccess()) {
-                // 业务成功处理
-                nextTag = response.getNextTag(); // 优先设置循环标示，避免中间异常
-                List<MybankEnterpriseBillQstockbillResponseV1.MybankEnterpriseBillQstockbillResponseRdV1> rdV1List = response.getRd();
-                List<com.engine.module.icbc.entity.QstockbillResponseRdV1sup> extendedList =
-                        rdV1List.stream()
-                                .map(QstockbillResponseRdV1sup::from)
-                                .collect(Collectors.toList());
+        try {
+            String nextTag = "-1"; // 初始页
+            while (!"".equals(nextTag)){
+                MybankEnterpriseBillQstockbillResponseV1 response = query(nextTag);
+                log.info("####调用工行票据查询接口查询结果！####输入nextTag："+nextTag+"，接口返回结果："+response.isSuccess()+"，接口返回行数："+response.getTotalNum()+"，接口返回nextTag："+response.getNextTag());
+                if (response.isSuccess()) {
+                    // 业务成功处理
+                    nextTag = response.getNextTag(); // 优先设置循环标示，避免中间异常
+                    List<MybankEnterpriseBillQstockbillResponseV1.MybankEnterpriseBillQstockbillResponseRdV1> rdV1List = response.getRd();
+                    List<QstockbillResponseRdV1sup> extendedList =
+                            rdV1List.stream()
+                                    .map(QstockbillResponseRdV1sup::from)
+                                    .collect(Collectors.toList());
 
-                List<EcologyRestEntity> ecologyRestList =
-                        EcologyRestEntity.list2EcRestData(extendedList);
+                    List<EcologyRestEntity> ecologyRestList =
+                            EcologyRestEntity.list2EcRestData(extendedList);
 
-                if(ecologyRestList == null || ecologyRestList.size() == 0){
-                    log.info("####调用工行票据查询接口工行返回数据为空！####" );
-                    return true;
+                    if(ecologyRestList == null || ecologyRestList.size() == 0){
+                        log.info("####调用工行票据查询接口工行返回数据为空！####" );
+                        return true;
+                    }
+
+                    EcologyRestUtil restUtil = new EcologyRestUtilImpl();
+                    Map<String,Object> resultMap = restUtil.saveOrUpdate(IcbcPk.QSTACKBILL, ecologyRestList);
+
+                    log.info("####调用工行票据查询接口写入建模数据结果！本次写数量："+ecologyRestList.size()+"，建模接口返回结果：" + ("1".equals(Util.null2String(resultMap.get("status"))) ? "成功！" : "失败！"));
+                } else {
+                    // 失败
+                    log.info("####调用工行票据查询接口工行返回失败！####" + response.getReturnMsg());
+                    throw new ECException("####调用工行票据查询接口工行返回失败！####" + response.getReturnMsg());
                 }
-
-                EcologyRestUtil restUtil = new EcologyRestUtilImpl();
-                Map<String,Object> resultMap = restUtil.saveOrUpdate(IcbcPk.QSTACKBILL, ecologyRestList);
-
-                log.info("####调用工行票据查询接口写入建模数据结果！本次写数量："+ecologyRestList.size()+"，建模接口返回结果：" + ("1".equals(Util.null2String(resultMap.get("status"))) ? "成功！" : "失败！"));
-            } else {
-                // 失败
-                log.info("####调用工行票据查询接口工行返回失败！####" + response.getReturnMsg());
-                throw new ECException("####调用工行票据查询接口工行返回失败！####" + response.getReturnMsg());
             }
+        }catch (Exception e){
+            log.info("####调用工行票据查询接口发生异常！####"+e.getMessage());
+            e.printStackTrace();
         }
-
         return true;
     }
 
@@ -91,27 +95,27 @@ public class QstackBillSyncCmd extends AbstractCommand<Boolean> {
         String timeFormat = now.format(DateTimeFormatter.ofPattern("HHmmssSSS"));
         String uuid = UUID.randomUUID().toString().replaceAll("-","");
 
-        final Properties CONFIG = Prop.loadTemplateProp(CONFIG_RESOURCE);
-        if (CONFIG == null) {
-            throw new ECException("未找到工行票据配置文件：" + CONFIG_RESOURCE + ".properties");
-        }
-        final String APP_ID = Util.null2String(CONFIG.getProperty(("icbc.app-id")));
-        final String APIGW_PUBLIC_KEY = Util.null2String(CONFIG.getProperty(("icbc.apigw-public-key")));
-        final String PRI_KEY = Util.null2String(CONFIG.getProperty(("icbc.private-key")));
-        final String BASE_URL = Util.null2String(CONFIG.getProperty(("icbc.base-url")));
-        final String CA_PRIVATE_STR = Util.null2String(CONFIG.getProperty(("icbc.ca-private-key")));
-        final String CA_PUBLIC_STR = Util.null2String(CONFIG.getProperty(("icbc.ca-public-key")));
-        final String CA_PASSWORD = Util.null2String(CONFIG.getProperty(("icbc.ca-password")));
-        final String SIGN_TYPE = Util.null2String(CONFIG.getProperty(("icbc.sign-type")));
-        final String CHARSET = Util.null2String(CONFIG.getProperty(("icbc.charset")));
-        final String FORMAT = Util.null2String(CONFIG.getProperty(("icbc.format")));
-        final String SERVICE_PATH = Util.null2String(CONFIG.getProperty(("icbc.service-path")));
-        final String CERTIFICATE_RESOURCE = Util.null2String(CONFIG.getProperty(("icbc.sm")));
-
+        String BASE_URL = "";
         MybankEnterpriseBillQstockbillResponseV1 response = null;
         MybankEnterpriseBillQstockbillRequestV1.MybankEnterpriseBillQstockbillRequestBizV1 bizContent =
                 new MybankEnterpriseBillQstockbillRequestV1.MybankEnterpriseBillQstockbillRequestBizV1();
         try {
+            final Properties CONFIG = Prop.loadTemplateProp(CONFIG_RESOURCE);
+            if (CONFIG == null) {
+                throw new ECException("未找到工行票据配置文件：" + CONFIG_RESOURCE + ".properties");
+            }
+            final String APP_ID = Util.null2String(CONFIG.getProperty(("icbc.app-id")));
+            final String APIGW_PUBLIC_KEY = Util.null2String(CONFIG.getProperty(("icbc.apigw-public-key")));
+            final String PRI_KEY = Util.null2String(CONFIG.getProperty(("icbc.private-key")));
+            BASE_URL = Util.null2String(CONFIG.getProperty(("icbc.base-url")));
+            final String CA_PRIVATE_STR = Util.null2String(CONFIG.getProperty(("icbc.ca-private-key")));
+            final String CA_PUBLIC_STR = Util.null2String(CONFIG.getProperty(("icbc.ca-public-key")));
+            final String CA_PASSWORD = Util.null2String(CONFIG.getProperty(("icbc.ca-password")));
+            final String SIGN_TYPE = Util.null2String(CONFIG.getProperty(("icbc.sign-type")));
+            final String CHARSET = Util.null2String(CONFIG.getProperty(("icbc.charset")));
+            final String FORMAT = Util.null2String(CONFIG.getProperty(("icbc.format")));
+            final String SERVICE_PATH = Util.null2String(CONFIG.getProperty(("icbc.service-path")));
+            final String CERTIFICATE_RESOURCE = Util.null2String(CONFIG.getProperty(("icbc.sm")));
             DefaultIcbcClient client = new DefaultIcbcClient(
                     APP_ID,
                     SIGN_TYPE,

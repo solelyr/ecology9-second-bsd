@@ -54,7 +54,7 @@ public class ErpHttpHelp {
      * @return
      */
     public static String post(String requestId, ErpConfig erpConfig, Map<String,String> header, Object data){
-        log.info("-------sap统一调用接口日志--start------");
+        log.info("-------erp统一调用接口日志--start------");
 
         // 定义日期格式
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
