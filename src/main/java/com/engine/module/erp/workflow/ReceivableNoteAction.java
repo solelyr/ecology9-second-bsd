@@ -5,7 +5,7 @@ import com.solelyr.common.service.WorkflowAction;
 import weaver.soa.workflow.request.RequestInfo;
 
 /**
- * @DESCRIPTION:
+ * @DESCRIPTION: 票据确认流程推送ERP创建应收票据
  * @USER: solelyr
  * @DATE: 2026/9/20 22:50
  */

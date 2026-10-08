@@ -6,7 +6,7 @@ import weaver.integration.logging.Logger;
 import weaver.soa.workflow.request.RequestInfo;
 
 /**
- * @DESCRIPTION:
+ * @DESCRIPTION: 测试代码
  * @USER: solelyr
  * @DATE: 2026/8/20 9:27
  */

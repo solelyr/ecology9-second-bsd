@@ -58,6 +58,11 @@ public class QstackBillSyncCmd extends AbstractCommand<Boolean> {
                 List<EcologyRestEntity> ecologyRestList =
                         EcologyRestEntity.list2EcRestData(extendedList);
 
+                if(ecologyRestList == null || ecologyRestList.size() == 0){
+                    log.info("####调用工行票据查询接口工行返回数据为空！####" );
+                    return true;
+                }
+
                 EcologyRestUtil restUtil = new EcologyRestUtilImpl();
                 Map<String,Object> resultMap = restUtil.saveOrUpdate(IcbcPk.QSTACKBILL, ecologyRestList);
 

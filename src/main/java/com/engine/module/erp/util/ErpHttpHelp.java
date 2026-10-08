@@ -6,7 +6,6 @@ import com.engine.module.erp.enums.ErpConfig;
 import com.engine.util.HttpLogUtil;
 import com.solelyr.common.utils.LoggerUtil;
 import weaver.integration.logging.Logger;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,7 +25,7 @@ import java.util.UUID;
 public class ErpHttpHelp {
     static Logger log = LoggerUtil.getLogger(ErpHttpHelp.class);
 
-    public static String post(String requestId, com.engine.module.erp.enums.ErpConfig erpConfig, Object data){
+    public static String post(String requestId, ErpConfig erpConfig, Object data){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
         String time = sdf.format(new Date());
         String digi_type = "sync";
@@ -39,6 +38,7 @@ public class ErpHttpHelp {
         String digi_key = stringToMD5(all);
         Map<String, String> headersMap = new HashMap<>();
         headersMap.put("digi_type", digi_type);
+        headersMap.put("digi-type", digi_type);
         headersMap.put("digi_protocol", digi_protocol);
         headersMap.put("digi_host", digi_host);
         headersMap.put("digi_service", digi_service);

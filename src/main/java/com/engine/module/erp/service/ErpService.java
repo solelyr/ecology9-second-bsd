@@ -24,7 +24,7 @@ public interface ErpService {
     Boolean TravelToExpense(RequestInfo requestInfo);
 
     /**
-     *
+     * 票据确认流程推送ERP创建应收票据
      * @param requestInfo
      * @return
      */
