@@ -17,7 +17,15 @@ repositories {
     mavenLocal()
     maven {
         url = uri('https://nexus.solelyz.cn/repository/maven-public/')
+        allowInsecureProtocol = true
+
+        // 如果 Nexus 需要登录认证，则配置 credentials
+        credentials {
+            username = "reader"
+            password = "reader"
+        }
     }
+
     mavenCentral()
 }
 
